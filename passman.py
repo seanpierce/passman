@@ -2,11 +2,25 @@
 # don't forget : chmod +x passman.py
 
 from collections import OrderedDict
-from models import Password
 import datetime
 import sys
 
 from peewee import *
+
+db = SqliteDatabase('passman.db')
+
+line = '_'*25
+
+class BaseModel(Model):
+    class Meta:
+        database = db
+
+class Password(BaseModel):
+    application = CharField(max_length = 255)
+    login = CharField(max_length = 255)
+    password = CharField(max_length = 255)
+    notes = TextField(null = False)
+    modified_at = DateTimeField(default = datetime.datetime.now)
 
 def initialize():
     """Create the database and tables if they don't already exist"""
@@ -17,12 +31,13 @@ def menu_loop():
     """Show the menu"""
     choice = None
 
-    print('_'*25)
+    print(line)
 
     while choice != 'q':
         print("Enter 'q' to quit.")
         for key, value in menu.items():
             print('{}) {}'.format(key, value.__doc__))
+
         choice = input('Action: ').lower().strip()
 
         if choice in menu:
@@ -34,25 +49,25 @@ def add_password():
     login = input("Enter the login name (email or username): ")
     password = input("Enter password: ")
     password_again = input("Confirm password: ")
-    print("(optional) Enter notes/ additional info, press ctl+d when finished. ")
-    notes = sys.stdin.read().strip()
+    notes = input("(optional) Enter notes/ additional info: ")
 
     errors = []
     if application == "":
-        error.append('Missing application')
+        errors.append('Missing application')
     if login == "":
-        error.append('Missing login')
+        errors.append('Missing login')
     if password == "":
-        error.append('Missing password')
+        errors.append('Missing password')
     if password_again == "":
-        error.append('Missing password confirmation')
+        errors.append('Missing password confirmation')
     if password != password_again:
-        error.append('Password and confirmation do not match')
+        errors.append('Password and confirmation do not match')
 
-    if errors.size:
+    if len(errors) > 0:
         print("Error - Password cannot be saved: ")
         for error in errors:
             print(error)
+        print(line)
 
     if not errors:
         if input("Save password? [Yn] ").lower() != 'n':
@@ -66,7 +81,7 @@ def add_password():
 
 def view_passwords(search_query = None):
     """View all passwords"""
-    passwords = Password.select().order_by(Password.modified_at.desc())
+    passwords = Password.select().order_by(Password.modified_at.desc())    
     if search_query:
         passwords = passwords.where(Password.application.contains(search_query))
 

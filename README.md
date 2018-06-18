@@ -12,7 +12,8 @@ Passman is a Python-based password management application. Data is managed using
 * ```shell
   $ git clone https://github.com/seanpierce/passman
   $ cd passman
-  $ python3 passman.py
+  $ chmod +x passman.py
+  $ ./passman.py
   ```
 
 **Notes:**

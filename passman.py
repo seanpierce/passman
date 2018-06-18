@@ -11,9 +11,9 @@ db = SqliteDatabase('passman.db')
 
 class Password(Model):
     application = CharField(max_length = 255)
-    # login = CharField(max_length = 255)
-    # password = CharField(max_length = 255)
-    # notes = TextField()
+    login = CharField(max_length = 255)
+    password = CharField(max_length = 255)
+    notes = TextField()
     modified_at = DateTimeField(default = datetime.datetime.now)
 
     class Meta:
@@ -41,10 +41,31 @@ def menu_loop():
 
 def add_password():
     """Add a password"""
-    print("Enter the application name, press ctl+d when finished.")
-    data = sys.stdin.read().strip()
+    application = input("Enter the application name: ")
+    login = input("Enter the login name (email or username): ")
+    password = input("Enter password: ")
+    password_again = input("Confirm password: ")
+    print("(optional) Enter notes/ additional info, press ctl+d when finished. ")
+    notes = sys.stdin.read().strip()
 
-    if data:
+    errors = []
+    if application == "":
+        error.append('Missing application')
+    if login == "":
+        error.append('Missing login')
+    if password == "":
+        error.append('Missing password')
+    if password_again == "":
+        error.append('Missing password confirmation')
+    if password != password_again:
+        error.append('Password and confirmation do not match')
+
+    if errors.size:
+        print("Error - Password cannot be saved: ")
+        for error in errors:
+            print(error)
+
+    if not errors:
         if input("Save password? [Yn] ").lower() != 'n':
             Password.create(application = data)
             print("Saved successfully!")

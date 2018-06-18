@@ -89,7 +89,11 @@ def view_passwords(search_query = None):
         modified_at = password.modified_at.strftime('%A %B %d, %Y %I:%M%p')
         print(modified_at)
         print('='*len(modified_at))
-        print(password.application)
+        print(f"Application Name: {password.application}")
+        print(f"Login Credentials: {password.login}")
+        print(f"Password: {password.password}")
+        print(f"Notes: {password.notes}")
+        print(line)
         print('n) for next password')
         print('q) return to main menu')
 

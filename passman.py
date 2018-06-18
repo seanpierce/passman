@@ -2,23 +2,11 @@
 # don't forget : chmod +x passman.py
 
 from collections import OrderedDict
+from models import Password
 import datetime
 import sys
 
 from peewee import *
-
-db = SqliteDatabase('passman.db')
-
-class BaseModel(Model):
-    class Meta:
-        database = db
-
-class Password(BaseModel):
-    application = CharField(max_length = 255)
-    login = CharField(max_length = 255)
-    password = CharField(max_length = 255)
-    notes = TextField(null = False)
-    modified_at = DateTimeField(default = datetime.datetime.now)
 
 def initialize():
     """Create the database and tables if they don't already exist"""

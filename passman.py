@@ -9,7 +9,7 @@ from peewee import *
 
 db = SqliteDatabase('passman.db')
 
-line = '_'*25
+line = '_' * 25
 
 class BaseModel(Model):
     class Meta:
@@ -88,7 +88,7 @@ def view_passwords(search_query = None):
     for password in passwords:
         modified_at = password.modified_at.strftime('%A %B %d, %Y %I:%M%p')
         print(modified_at)
-        print('='*len(modified_at))
+        print('=' * len(modified_at))
         print(f"Application Name: {password.application}")
         print(f"Login Credentials: {password.login}")
         print(f"Password: {password.password}")

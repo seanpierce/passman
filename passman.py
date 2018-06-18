@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 # don't forget : chmod +x passman.py
 
-import datetime
 from collections import OrderedDict
+import datetime
+import sys
+
 from peewee import *
 
 db = SqliteDatabase('passman.db')
@@ -37,6 +39,13 @@ def menu_loop():
 
 def add_password():
     """Add a password"""
+    print("Enter the application name, press ctl+d when finished.")
+    data = sys.stdin.read().strip()
+
+    if data:
+        if input("Save password? [Yn] ").lower() != 'n':
+            Password.create(application = data)
+            print("Saved successfully!")
 
 def view_passwords():
     """View all passwords"""

@@ -9,15 +9,16 @@ from peewee import *
 
 db = SqliteDatabase('passman.db')
 
-class Password(Model):
+class BaseModel(Model):
+    class Meta:
+        database = db
+
+class Password(BaseModel):
     application = CharField(max_length = 255)
     login = CharField(max_length = 255)
     password = CharField(max_length = 255)
-    notes = TextField()
+    notes = TextField(null = False)
     modified_at = DateTimeField(default = datetime.datetime.now)
-
-    class Meta:
-        database = db
 
 def initialize():
     """Create the database and tables if they don't already exist"""
@@ -67,7 +68,12 @@ def add_password():
 
     if not errors:
         if input("Save password? [Yn] ").lower() != 'n':
-            Password.create(application = data)
+            Password.create(
+                application = application,
+                login = login,
+                password = password,
+                notes = notes
+            )
             print("Saved successfully!")
 
 def view_passwords(search_query = None):

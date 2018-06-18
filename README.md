@@ -26,5 +26,5 @@ Passman is a Python-based password management application. Data is managed using
 
 **TODO:**
 * Authenticate user with encrypted master password
- * (https://pypi.org/project/bcrypt/)
+  * (https://pypi.org/project/bcrypt/)
 * Associate stored passwords with the current user

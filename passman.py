@@ -11,9 +11,9 @@ db = SqliteDatabase('passman.db')
 
 class Password(Model):
     application = CharField(max_length = 255)
-    login = CharField(max_length = 255)
-    password = CharField(max_length = 255)
-    notes = TextField()
+    # login = CharField(max_length = 255)
+    # password = CharField(max_length = 255)
+    # notes = TextField()
     modified_at = DateTimeField(default = datetime.datetime.now)
 
     class Meta:
@@ -27,6 +27,8 @@ def initialize():
 def menu_loop():
     """Show the menu"""
     choice = None
+
+    print('_'*25)
 
     while choice != 'q':
         print("Enter 'q' to quit.")
@@ -47,8 +49,29 @@ def add_password():
             Password.create(application = data)
             print("Saved successfully!")
 
-def view_passwords():
+def view_passwords(search_query = None):
     """View all passwords"""
+    passwords = Password.select().order_by(Password.modified_at.desc())
+    if search_query:
+        passwords = passwords.where(Password.application.contains(search_query))
+
+    for password in passwords:
+        modified_at = password.modified_at.strftime('%A %B %d, %Y %I:%M%p')
+        print(modified_at)
+        print('='*len(modified_at))
+        print(password.application)
+        print('n) for next password')
+        print('q) return to main menu')
+
+        next_action = input("Action: [Nq] ").lower().strip()
+        if next_action == 'q':
+            break
+
+def search_passwords():
+    """Search all passwords by application name"""
+    query = input("Search: ").lower().strip()
+    view_passwords(query)
+
 
 def delete_password(password):
     """Delete a password"""
@@ -56,6 +79,7 @@ def delete_password(password):
 menu = OrderedDict([
     ('a', add_password),
     ('v', view_passwords),
+    ('s', search_passwords),
 ])
 
 if __name__ == '__main__':

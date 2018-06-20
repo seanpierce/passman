@@ -1,12 +1,12 @@
 # PassMan
 <img src="img/Release-1.1.0-blue.svg">
 
-PassMan is a Python-based password management console application. Data is managed using Peewee and stored in a Sqlite3 database.
+PassMan is a Python-based **pass**word **man**agement console application. Data is managed using Peewee ORM and stored in a Sqlite3 database.
 
 ### Dependencies
 * Python3
   * Check version using `$ python --version`
-  * <a href="https://www.python.org/downloads/release/python-365/">Upgrading to Python3</a>
+  * <a href="https://www.python.org/downloads/release/python-365/">Installing or upgrading to Python3</a>
 * <a href="http://docs.peewee-orm.com/en/latest/">PeeWee</a>
 * <a href="https://pypi.org/project/bcrypt/">Bcrypt</a>
 * <a href="https://pypi.org/project/colorama/">Colorama</a>
@@ -28,7 +28,7 @@ $ ./passman.py
 ```
 
 **Notes:**  
-It's helpful to alias "python" and "pip" to point towards the "python3" and "pip3" commands respectively
+It's helpful to alias "python" and "pip" to point towards the "python3" and "pip3" commands respectively.
 ```shell
 $ echo "alias python=python3" > ~/.bashrc
 $ echo "alias pip=pip3" > ~/.bashrc
@@ -37,6 +37,8 @@ $ # for zsh users, replace .bachrc with .zshrc
 
 **TODO:**
 * Copy project to PATH, execute with single command 'passman'
+* Package project and dependencies for offline installation
+* Separate main menu functions into own module
 
 **Author:**  
 Sean Pierce Sumler

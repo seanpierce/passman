@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 # don't forget : chmod +x passman.py
 
-from models import *
 import bcrypt
+from models import *
+from colorama import init
+from termcolor import colored, cprint
 
-line = '_' * 25
-current_user = User
+init()
+
+line = "\n" + ('=' * 25) + "\n"
+current_user = None
 
 def initialize():
     """Create the database and tables if they don't already exist"""
@@ -20,13 +24,13 @@ def check_users():
 
 def create_user():
     """Create a new user"""
-    print("Create a new user")
     print(line)
+    cprint('Create a new user', 'magenta', attrs=['bold'])
     new_user = False
     while new_user == False:
-        username = input("Enter a username: ")
-        password = input("Enter a password: ")
-        confirmation = input("Confirm password: ")
+        username = input(f"Enter a {colored('username', 'cyan')}: ")
+        password = input(f"Enter a {colored('password', 'cyan')}: ")
+        confirmation = input(f"Confirm {colored('password', 'cyan')}: ")
 
         errors = []
         if username == "":
@@ -39,9 +43,9 @@ def create_user():
             errors.append('Password and confirmation do not match')
 
         if len(errors) > 0:
-            print("** Error - User cannot be saved")
+            cprint("** Error - User cannot be saved", 'red')
             for error in errors:
-                print("** " + error)
+                cprint(f"** {error}", 'red')
             print(line)
             continue
 
@@ -57,8 +61,7 @@ def create_user():
             username = username,
             password_hash = hash
         )
-        print("User created successfully!")
-        print(line)
+        cprint("User created successfully!", 'green')
         new_user = True
 
 
@@ -97,11 +100,11 @@ def menu_loop():
     print(line)
 
     while choice != 'q':
-        print("Enter 'q' to quit.")
+        print("Enter" + colored(" 'q' ", 'yellow') + "to quit.")
         for key, value in menu.items():
-            print('{}) {}'.format(key, value.__doc__))
+            print(colored(key, 'magenta') + ") " + value.__doc__)
 
-        choice = input('Action: ').lower().strip()
+        choice = input(colored('Action', 'cyan') + ': ').lower().strip()
 
         if choice in menu:
             menu[choice]()
@@ -151,18 +154,18 @@ def view_passwords(search_query = None):
         passwords = passwords.where(Password.application.contains(search_query))
 
     if not passwords:
-        print("No records found...")
+        cprint("No records found...", 'yellow')
         print(line)
 
     for password in passwords:
-        modified_at = password.modified_at.strftime('%A %B %d, %Y %I:%M%p')
-        print(modified_at)
-        print('=' * len(modified_at))
+        modified_at = password.modified_at.strftime('%B %d, %Y')
+        print("\n" + ('=' * 25))
         print(f"Application Name: {password.application}")
         print(f"Login Credentials: {password.login}")
         print(f"Password: {password.password}")
         print(f"Notes: {password.notes}")
-        print(line)
+        print(f"Last Modified: {modified_at}")
+        print(('=' * 25) + "\n")
         print('n) for next password')
         print('q) return to main menu')
 

@@ -5,6 +5,7 @@ from models import *
 import bcrypt
 
 line = '_' * 25
+current_user = User
 
 def initialize():
     """Create the database and tables if they don't already exist"""
@@ -19,6 +20,8 @@ def check_users():
 
 def create_user():
     """Create a new user"""
+    print("Create a new user")
+    print(line)
     new_user = False
     while new_user == False:
         username = input("Enter a username: ")
@@ -36,9 +39,9 @@ def create_user():
             errors.append('Password and confirmation do not match')
 
         if len(errors) > 0:
-            print("Error - User cannot be saved: ")
+            print("** Error - User cannot be saved")
             for error in errors:
-                print(error)
+                print("** " + error)
             print(line)
             continue
 
@@ -49,7 +52,8 @@ def create_user():
 
 
         hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        User.create(
+        global current_user
+        current_user = User.create(
             username = username,
             password_hash = hash
         )
@@ -59,7 +63,12 @@ def create_user():
 
 
 def login():
-    login = False
+    global current_user
+    if not current_user:
+        login = False
+    else:
+        login = True
+
     while login == False:
         entered_username = input("Please enter your user name: ")
         entered_password = input("Please enter your master password: ")
@@ -118,14 +127,16 @@ def add_password():
         errors.append('Password and confirmation do not match')
 
     if len(errors) > 0:
-        print("Error - Password cannot be saved: ")
+        print("** Error - Password cannot be saved")
         for error in errors:
-            print(error)
+            print("** " + error)
         print(line)
 
     if not errors:
         if input("Save password? [Yn] ").lower() != 'n':
+            global current_user
             Password.create(
+                user = current_user,
                 application = application,
                 login = login,
                 password = password,

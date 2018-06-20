@@ -25,5 +25,12 @@ Passman is a Python-based password management application. Data is managed using
   ```
 
 **TODO:**
-* Associate stored passwords with the current user
-* Copy scripts to PATH
+* Copy project to PATH, execute with single command 'passman'
+
+**Author:**
+Sean Pierce Sumler
+
+**License:**
+MIT, use at your own risk
+
+For questions and comments please <a href="https://github.com/seanpierce/passman/issues/new">raise an issue</a>. <a href="https://github.com/seanpierce/passman/compare">Pull requests</a> always welcome, too. Thanks!

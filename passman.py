@@ -25,6 +25,7 @@ def check_users():
 def create_user():
     """Create a new user"""
     print(line)
+
     cprint('Create a new user', 'magenta', attrs=['bold'])
     new_user = False
     while new_user == False:
@@ -69,6 +70,7 @@ def login():
         login = True
 
     while login == False:
+        print(line)
         entered_username = input("Please enter your user name: ")
         entered_password = input("Please enter your master password: ")
 
@@ -102,7 +104,6 @@ def print_errors(errors):
 def menu_loop():
     """Show the menu"""
     choice = None
-
     print(line)
 
     while choice != 'q':
@@ -117,6 +118,8 @@ def menu_loop():
 
 def add_password():
     """Add a password"""
+    print(line)
+
     application = input(f"Enter the {colored('application name', 'magenta')}: ")
     login = input(f"Enter the {colored('login name', 'magenta')} (email or username): ")
     password = input(f"Enter {colored('password', 'magenta')}: ")
@@ -151,13 +154,14 @@ def add_password():
 
 def view_passwords(search_query = None):
     """View all passwords"""
+    print(line)
+
     passwords = Password.select().order_by(Password.modified_at.desc())
     if search_query:
         passwords = passwords.where(Password.application.contains(search_query))
 
     if not passwords:
         cprint("No records found...", 'yellow')
-        print(line)
 
     for password in passwords:
         modified_at = password.modified_at.strftime('%B %d, %Y')
@@ -166,7 +170,7 @@ def view_passwords(search_query = None):
         print(f"{colored('Login Credentials', 'yellow')}: {password.login}")
         print(f"{colored('Password', 'yellow')}: {password.password}")
         print(f"{colored('Notes', 'yellow')}: {password.notes}")
-        print(f"{colored('Last Modified', 'yellow')} {modified_at}")
+        print(f"{colored('Last Modified', 'yellow')}: {modified_at}")
         print("\n")
         print(f"{colored('n', 'magenta')}) for next password")
         print(f"{colored('q', 'magenta')}) return to main menu")
@@ -177,6 +181,7 @@ def view_passwords(search_query = None):
 
 def search_passwords():
     """Search all passwords by application name"""
+    print(line)
     query = input(f"{colored('Search', 'cyan')}: ").lower().strip()
     view_passwords(query)
 

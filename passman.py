@@ -1,31 +1,49 @@
 #!/usr/bin/env python3
 # don't forget : chmod +x passman.py
 
-from collections import OrderedDict
-import datetime
-import sys
-
-from peewee import *
-
-db = SqliteDatabase('passman.db')
+from models import *
+import bcrypt
 
 line = '_' * 25
-
-class BaseModel(Model):
-    class Meta:
-        database = db
-
-class Password(BaseModel):
-    application = CharField(max_length = 255)
-    login = CharField(max_length = 255)
-    password = CharField(max_length = 255)
-    notes = TextField(null = False)
-    modified_at = DateTimeField(default = datetime.datetime.now)
 
 def initialize():
     """Create the database and tables if they don't already exist"""
     db.connect()
-    db.create_tables([Password], safe = True)
+    db.create_tables([Password, User], safe = True)
+    creatUser()
+
+def creatUser():
+    created_user = User.get(User.username == 'username')
+
+    if not created_user:
+        hash = bcrypt.hashpw(b'password', bcrypt.gensalt())
+        User.create(
+            username = "username",
+            password_hash = hash
+        )
+
+def login():
+    login = False
+    while login == False:
+        entered_username = input("Please enter your user name: ")
+        entered_password = input("Please enter your master password: ")
+        created_user = User.get(User.username == entered_username)
+
+        if not created_user:
+            print("User: {} not found".format(entered_username))
+            return
+
+        encoded_entered_password = bytes(entered_password, 'utf-8')
+        encoded_stored_hash = bytes(created_user.password_hash, 'utf-8')
+
+        hash = bcrypt.hashpw(encoded_entered_password, encoded_stored_hash).decode('utf-8')
+
+        if created_user.password_hash == hash:
+            print('YEEESSSSS')
+        else:
+            print('NOOOOOO')
+            print("Current hash: " + created_user.password_hash)
+            print("entered hash: " + hash)
 
 def menu_loop():
     """Show the menu"""
@@ -118,4 +136,5 @@ menu = OrderedDict([
 
 if __name__ == '__main__':
     initialize()
-    menu_loop()
+    login()
+    # menu_loop()

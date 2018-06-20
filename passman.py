@@ -24,11 +24,10 @@ def check_users():
 
 def create_user():
     """Create a new user"""
-    print(line)
-
     cprint('Create a new user', 'magenta', attrs=['bold'])
     new_user = False
     while new_user == False:
+        print(line)
         username = input(f"Enter a {colored('username', 'cyan')}: ")
         password = input(f"Enter a {colored('password', 'cyan')}: ")
         confirmation = input(f"Confirm {colored('password', 'cyan')}: ")
@@ -86,6 +85,7 @@ def login():
         hash = bcrypt.hashpw(encoded_entered_password, encoded_stored_hash).decode('utf-8')
 
         if created_user.password_hash == hash:
+            current_user = created_user
             login = True
         else:
             print("Password not valid for user '{}'".format(entered_username))
@@ -93,7 +93,7 @@ def login():
 
 def print_errors(errors):
     if len(errors) > 0:
-        cprint("** Error - User cannot be saved", 'red')
+        cprint("** Error - entry cannot be saved", 'red')
         for error in errors:
             cprint(f"** {error}", 'red')
         print(line)
@@ -103,10 +103,10 @@ def print_errors(errors):
 
 def menu_loop():
     """Show the menu"""
-    choice = None
-    print(line)
+    choice = None    
 
     while choice != 'q':
+        print(line)
         print("Enter" + colored(" 'q' ", 'yellow') + "to quit.")
         for key, value in menu.items():
             print(colored(key, 'magenta') + ") " + value.__doc__)
@@ -156,7 +156,8 @@ def view_passwords(search_query = None):
     """View all passwords"""
     print(line)
 
-    passwords = Password.select().order_by(Password.modified_at.desc())
+    global current_user
+    passwords = Password.select().where(Password.user == current_user).order_by(Password.modified_at.desc())
     if search_query:
         passwords = passwords.where(Password.application.contains(search_query))
 

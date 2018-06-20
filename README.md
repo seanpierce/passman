@@ -7,14 +7,23 @@ PassMan is a Python-based password management console application. Data is manag
 * Python3
   * Check version using `$ python --version`
   * <a href="https://www.python.org/downloads/release/python-365/">Upgrading to Python3</a>
-* PeeWee
-  * `pip3 install peewee`
+* <a href="http://docs.peewee-orm.com/en/latest/">PeeWee</a>
+* <a href="https://pypi.org/project/bcrypt/">Bcrypt</a>
+* <a href="https://pypi.org/project/colorama/">Colorama</a>
+* <a href="https://pypi.org/project/termcolor/">Termcolor</a>
 
 ### Installation and Usage
 ```shell
 $ git clone https://github.com/seanpierce/passman
 $ cd passman
+$ # install dependencies:
+$ pip3 install peewee
+$ pip3 install bcrypt
+$ pip3 install colorama
+$ pip3 install termcolor
+$ # set privilages for main script
 $ chmod +x passman.py
+$ # run main script
 $ ./passman.py
 ```
 

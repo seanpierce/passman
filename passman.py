@@ -42,11 +42,7 @@ def create_user():
         if password != confirmation:
             errors.append('Password and confirmation do not match')
 
-        if len(errors) > 0:
-            cprint("** Error - User cannot be saved", 'red')
-            for error in errors:
-                cprint(f"** {error}", 'red')
-            print(line)
+        if print_errors(errors) == True:
             continue
 
         query = User.select().where(User.username == username)
@@ -93,6 +89,16 @@ def login():
             print("Password not valid for user '{}'".format(entered_username))
             continue
 
+def print_errors(errors):
+    if len(errors) > 0:
+        cprint("** Error - User cannot be saved", 'red')
+        for error in errors:
+            cprint(f"** {error}", 'red')
+        print(line)
+        return True
+    else:
+        return False
+
 def menu_loop():
     """Show the menu"""
     choice = None
@@ -111,11 +117,11 @@ def menu_loop():
 
 def add_password():
     """Add a password"""
-    application = input("Enter the application name: ")
-    login = input("Enter the login name (email or username): ")
-    password = input("Enter password: ")
-    password_again = input("Confirm password: ")
-    notes = input("(optional) Enter notes/ additional info: ")
+    application = input(f"Enter the {colored('application name', 'magenta')}: ")
+    login = input(f"Enter the {colored('login name', 'magenta')} (email or username): ")
+    password = input(f"Enter {colored('password', 'magenta')}: ")
+    password_again = input(f"Confirm {colored('password', 'magenta')}: ")
+    notes = input(f"(optional) Enter {colored('notes/ additional info', 'magenta')}: ")
 
     errors = []
     if application == "":
@@ -129,14 +135,10 @@ def add_password():
     if password != password_again:
         errors.append('Password and confirmation do not match')
 
-    if len(errors) > 0:
-        print("** Error - Password cannot be saved")
-        for error in errors:
-            print("** " + error)
-        print(line)
+    print_errors(errors)
 
     if not errors:
-        if input("Save password? [Yn] ").lower() != 'n':
+        if input(f"{colored('Save password?', 'cyan')} [Yn] ").lower() != 'n':
             global current_user
             Password.create(
                 user = current_user,
@@ -145,7 +147,7 @@ def add_password():
                 password = password,
                 notes = notes
             )
-            print("Saved successfully!")
+            cprint("Password saved successfully!", 'green')
 
 def view_passwords(search_query = None):
     """View all passwords"""
@@ -159,23 +161,23 @@ def view_passwords(search_query = None):
 
     for password in passwords:
         modified_at = password.modified_at.strftime('%B %d, %Y')
-        print("\n" + ('=' * 25))
-        print(f"Application Name: {password.application}")
-        print(f"Login Credentials: {password.login}")
-        print(f"Password: {password.password}")
-        print(f"Notes: {password.notes}")
-        print(f"Last Modified: {modified_at}")
-        print(('=' * 25) + "\n")
-        print('n) for next password')
-        print('q) return to main menu')
+        print(line)
+        print(f"{colored('Application Name', 'yellow')}: {password.application}")
+        print(f"{colored('Login Credentials', 'yellow')}: {password.login}")
+        print(f"{colored('Password', 'yellow')}: {password.password}")
+        print(f"{colored('Notes', 'yellow')}: {password.notes}")
+        print(f"{colored('Last Modified', 'yellow')} {modified_at}")
+        print("\n")
+        print(f"{colored('n', 'magenta')}) for next password")
+        print(f"{colored('q', 'magenta')}) return to main menu")
 
-        next_action = input("Action: [Nq] ").lower().strip()
+        next_action = input(f"{colored('Action', 'cyan')}: [Nq] ").lower().strip()
         if next_action == 'q':
             break
 
 def search_passwords():
     """Search all passwords by application name"""
-    query = input("Search: ").lower().strip()
+    query = input(f"{colored('Search', 'cyan')}: ").lower().strip()
     view_passwords(query)
 
 

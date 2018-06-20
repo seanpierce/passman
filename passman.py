@@ -10,40 +10,40 @@ def initialize():
     """Create the database and tables if they don't already exist"""
     db.connect()
     db.create_tables([Password, User], safe = True)
-    creatUser()
+    createUser()
 
-def creatUser():
-    created_user = User.get(User.username == 'username')
-
-    if not created_user:
+def createUser():
+    query = User.select().where(User.username == 'username')
+    if not query.exists():
         hash = bcrypt.hashpw(b'password', bcrypt.gensalt())
         User.create(
             username = "username",
             password_hash = hash
         )
 
+
 def login():
     login = False
     while login == False:
         entered_username = input("Please enter your user name: ")
         entered_password = input("Please enter your master password: ")
+
+        query = User.select().where(User.username == entered_username)
+        if not query.exists():
+            print("User '{}' not found".format(entered_username))
+            continue
+
         created_user = User.get(User.username == entered_username)
-
-        if not created_user:
-            print("User: {} not found".format(entered_username))
-            return
-
         encoded_entered_password = bytes(entered_password, 'utf-8')
         encoded_stored_hash = bytes(created_user.password_hash, 'utf-8')
 
         hash = bcrypt.hashpw(encoded_entered_password, encoded_stored_hash).decode('utf-8')
 
         if created_user.password_hash == hash:
-            print('YEEESSSSS')
+            login = True
         else:
-            print('NOOOOOO')
-            print("Current hash: " + created_user.password_hash)
-            print("entered hash: " + hash)
+            print("Password not valid for user '{}'".format(entered_username))
+            continue
 
 def menu_loop():
     """Show the menu"""
@@ -99,7 +99,7 @@ def add_password():
 
 def view_passwords(search_query = None):
     """View all passwords"""
-    passwords = Password.select().order_by(Password.modified_at.desc())    
+    passwords = Password.select().order_by(Password.modified_at.desc())
     if search_query:
         passwords = passwords.where(Password.application.contains(search_query))
 

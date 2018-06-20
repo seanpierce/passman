@@ -10,16 +10,52 @@ def initialize():
     """Create the database and tables if they don't already exist"""
     db.connect()
     db.create_tables([Password, User], safe = True)
-    createUser()
 
-def createUser():
-    query = User.select().where(User.username == 'username')
-    if not query.exists():
-        hash = bcrypt.hashpw(b'password', bcrypt.gensalt())
+def check_users():
+    users = User.select()
+    if not users.exists():
+        create_user()
+
+
+def create_user():
+    """Create a new user"""
+    new_user = False
+    while new_user == False:
+        username = input("Enter a username: ")
+        password = input("Enter a password: ")
+        confirmation = input("Confirm password: ")
+
+        errors = []
+        if username == "":
+            errors.append('Missing username')
+        if password == "":
+            errors.append('Missing password')
+        if confirmation == "":
+            errors.append('Missing password confirmation')
+        if password != confirmation:
+            errors.append('Password and confirmation do not match')
+
+        if len(errors) > 0:
+            print("Error - User cannot be saved: ")
+            for error in errors:
+                print(error)
+            print(line)
+            continue
+
+        query = User.select().where(User.username == username)
+        if query.exists():
+            print("Username unavailable. Please try again.")
+            continue
+
+
+        hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         User.create(
-            username = "username",
+            username = username,
             password_hash = hash
         )
+        print("User created successfully!")
+        print(line)
+        new_user = True
 
 
 def login():
@@ -103,6 +139,10 @@ def view_passwords(search_query = None):
     if search_query:
         passwords = passwords.where(Password.application.contains(search_query))
 
+    if not passwords:
+        print("No records found...")
+        print(line)
+
     for password in passwords:
         modified_at = password.modified_at.strftime('%A %B %d, %Y %I:%M%p')
         print(modified_at)
@@ -132,9 +172,11 @@ menu = OrderedDict([
     ('a', add_password),
     ('v', view_passwords),
     ('s', search_passwords),
+    ('c', create_user)
 ])
 
 if __name__ == '__main__':
     initialize()
+    check_users()
     login()
-    # menu_loop()
+    menu_loop()

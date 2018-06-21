@@ -1,7 +1,7 @@
 # PassMan
 <img src="img/Release-1.2.1-blue.svg">
 
-PassMan is a Python-based **pass**word **man**agement console application. Data is managed using Peewee ORM and stored in a Sqlite3 database.
+PassMan is a super simple, Python-based **pass**word **man**agement console application. Data is managed using Peewee ORM and stored in a Sqlite3 database.
 
 ### Dependencies
 * Python3

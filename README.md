@@ -1,5 +1,5 @@
 # PassMan
-<img src="img/Release-1.2.0-blue.svg">
+<img src="img/Release-1.2.1-blue.svg">
 
 PassMan is a Python-based **pass**word **man**agement console application. Data is managed using Peewee ORM and stored in a Sqlite3 database.
 
@@ -39,6 +39,8 @@ $ # for zsh users, replace .bachrc with .zshrc
 * Copy project to PATH, execute with single command 'passman'
 * Package project and dependencies for offline installation
 * Separate main menu functions into own module
+* Add feature to copy current password to clipboard
+* Update/delete passwords from database
 
 **Author:**  
 Sean Pierce Sumler

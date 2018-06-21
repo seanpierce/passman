@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3 -*- coding: utf-8 -*-
 # don't forget : chmod +x passman.py
 
 import bcrypt
@@ -50,8 +50,7 @@ def create_user():
             print("Username unavailable. Please try again.")
             continue
 
-
-        hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        hash = bcrypt.hashpw(password, bcrypt.gensalt())
         global current_user
         current_user = User.create(
             username = username,
@@ -79,10 +78,7 @@ def login():
             continue
 
         created_user = User.get(User.username == entered_username)
-        encoded_entered_password = bytes(entered_password, 'utf-8')
-        encoded_stored_hash = bytes(created_user.password_hash, 'utf-8')
-
-        hash = bcrypt.hashpw(encoded_entered_password, encoded_stored_hash).decode('utf-8')
+        hash = bcrypt.hashpw(entered_password, created_user.password_hash)
 
         if created_user.password_hash == hash:
             current_user = created_user

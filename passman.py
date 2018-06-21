@@ -78,7 +78,7 @@ def login():
             continue
 
         created_user = User.get(User.username == entered_username)
-        hash = bcrypt.hashpw(entered_password, created_user.password_hash)
+        hash = bcrypt.hashpw(entered_password.encode('utf-8'), created_user.password_hash.encode('utf-8'))
 
         if created_user.password_hash == hash:
             current_user = created_user

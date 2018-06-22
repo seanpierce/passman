@@ -2,6 +2,7 @@
 # don't forget : chmod +x passman.py
 
 import bcrypt
+import pyperclip
 from models import *
 from colorama import init
 from termcolor import colored, cprint
@@ -172,6 +173,7 @@ def view_passwords(search_query = None):
         print(f"{colored('n', 'magenta')}) for next password")
         print(f"{colored('q', 'magenta')}) return to main menu")
 
+        pyperclip.copy(password.password)
         next_action = input(f"{colored('Action', 'cyan')}: [Nq] ").lower().strip()
         if next_action == 'q':
             break

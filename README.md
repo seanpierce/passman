@@ -1,5 +1,5 @@
 # PassMan
-<img src="img/Release-1.2.2-blue.svg">
+<img src="assets/Release-1.2.4-blue.svg">
 
 PassMan is a super simple, Python-based **pass**word **man**agement console application. Data is managed using Peewee ORM and stored in a Sqlite3 database.
 
@@ -14,17 +14,8 @@ PassMan is a super simple, Python-based **pass**word **man**agement console appl
 
 ### Installation and Usage
 ```shell
-$ git clone https://github.com/seanpierce/passman
-$ cd passman
-$ # install dependencies:
-$ pip3 install peewee
-$ pip3 install bcrypt
-$ pip3 install colorama
-$ pip3 install termcolor
-$ # set privilages for main script
-$ chmod +x passman.py
-$ # run main script
-$ ./passman.py
+$ pip3 install passwordmanager
+$ python3 passman
 ```
 
 **Notes:**  
@@ -32,12 +23,16 @@ It's helpful to alias "python" and "pip" to point towards the "python3" and "pip
 ```shell
 $ echo "alias python=python3" > ~/.bashrc
 $ echo "alias pip=pip3" > ~/.bashrc
-$ # for zsh users, replace .bachrc with .zshrc
+$ # for zshell users, replace ~/.bachrc with ~/.zshrc
+```
+
+Additionally, you can alias 'passman', to avoid typing 'python' each time you run the app
+
+```shell
+$ echo "alias passman='python3 passman'" > ~/.bashrc
 ```
 
 **TODO:**
-* Copy project to PATH, execute with single command 'passman'
-* Package project and dependencies for offline installation
 * Separate main menu functions into own module
 * Add feature to copy current password to clipboard
 * Update/delete passwords from database

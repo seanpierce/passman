@@ -1,5 +1,5 @@
 # PassMan
-<img src="assets/Release-1.2.4-blue.svg">
+<img src="assets/Release-1.3.0-blue.svg">
 
 PassMan is a super simple, Python-based **pass**word **man**agement console application. Data is managed using Peewee ORM and stored in a Sqlite3 database.
 
@@ -11,12 +11,12 @@ PassMan is a super simple, Python-based **pass**word **man**agement console appl
 * <a href="https://pypi.org/project/bcrypt/">Bcrypt</a>
 * <a href="https://pypi.org/project/colorama/">Colorama</a>
 * <a href="https://pypi.org/project/termcolor/">Termcolor</a>
-* <a href="">Pyperclip</a>
+* <a href="https://pypi.org/project/pyperclip/">Pyperclip</a>
 
 ### Installation and Usage
 ```shell
 $ pip3 install passwordmanager
-$ # "path/to/python path/to/passman"
+$ # path/to/python path/to/passman
 $ python3 passman
 ```
 
@@ -31,11 +31,21 @@ $ # for zshell users, replace ~/.bachrc with ~/.zshrc
 Additionally, you can alias 'passman' to the execute the entire command.
 
 ```shell
+# note that the python versions in this example might not be the version you're using, adjust accordingly
 # the following works for most MacOS users:
-$ echo "alias passman='python3 passman'" > ~/.bashrc
+$ PATH_TO_PYTHON = "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages"
+$ echo "alias passman='python3 $PATH_TO_PYTHON'" > ~/.bashrc
 # the following works for most Windows 10 users:
-$ echo "alias passman='python3 && cd \"/c/Program Files (x86)/Python36-32/Lib/site-packages/passman/__main__.py\"'" >
+$ PATH_TO_PYTHON = "/c/Program Files (x86)/Python36-32/Lib/site-packages/passman/__main__.py"
+$ echo "alias passman='python3 $PATH_TO_PYTHON'" > /.bashrc
 ```
+
+\* This package was uploaded using <a href="https://anweshadas.in/how-to-upload-a-package-in-pypi-using-twine/">twine</a>:
+```shell
+$ python3 setup.py sdist
+$ twine upload dist/*
+```
+
 
 **TODO:**
 * Separate main menu functions into own module

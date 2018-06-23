@@ -49,7 +49,6 @@ $ twine upload dist/*
 
 **TODO:**
 * Separate main menu functions into own module
-* Add feature to copy current password to clipboard
 * Update/delete passwords from database
 
 **Author:**  

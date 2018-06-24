@@ -21,10 +21,3 @@ class Password(BaseModel):
     password = CharField(max_length = 255)
     notes = TextField(null = False)
     modified_at = DateTimeField(default = datetime.datetime.now)
-
-logo = """\
- _____ _____ _____ _____ _____ _____ _____
-|  _  |  _  |   __|   __|     |  _  |   | |
-|   __|     |__   |__   | | | |     | | | |
-|__|  |__|__|_____|_____|_|_|_|__|__|_|___|
-"""

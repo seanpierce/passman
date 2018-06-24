@@ -17,7 +17,10 @@ PassMan is a super simple, Python-based **pass**word **man**agement console appl
 
 ### Installation and Usage
 ```shell
+$ # via pip
 $ pip3 install passwordmanager
+$ # via source
+$ git clone https://github.com/seanpierce/passman
 $ # path/to/python path/to/passman
 $ python3 passman
 ```

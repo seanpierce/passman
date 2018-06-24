@@ -2,14 +2,13 @@
 # don't forget : chmod +x passman.py
 
 import bcrypt
-import pyperclip
 from models import *
+from helpers import *
 from colorama import init
 from termcolor import colored, cprint
 
 init()
 
-line = "\n" + ('=' * 25) + "\n"
 current_user = None
 
 def initialize():
@@ -21,19 +20,6 @@ def check_users():
     users = User.select()
     if not users.exists():
         create_user()
-
-def print_errors(errors):
-    if len(errors) > 0:
-        cprint("** Error - entry cannot be saved", 'red')
-        for error in errors:
-            cprint(f"** {error}", 'red')
-        print(line)
-        return True
-    else:
-        return False
-
-def title(title):
-    cprint(title, "magenta", attrs=['bold'])
 
 def create_user():
     """Create a new user"""
@@ -72,7 +58,6 @@ def create_user():
         cprint("User created successfully!", 'green')
         new_user = True
 
-
 def login():
     global current_user
     if not current_user:
@@ -108,10 +93,10 @@ def login_menu():
 
     print(line)
 
-    print(colored('l', 'magenta') + ") " + 'Log in with an existing user')
-    print(colored('c', 'magenta') + ") " + 'Create a new user')
+    print(colored('l', 'magenta') + ") " + 'log in with an existing user')
+    print(colored('c', 'magenta') + ") " + 'create a new user')
 
-    action = input(colored('Action', 'cyan') + '[Lc]: ').lower().strip()
+    action = input(colored('Action:', 'cyan') + ' [Lc] ').lower().strip()
 
     if action == 'c':
         create_user()
@@ -189,28 +174,13 @@ def view_passwords(search_query = None):
         cprint("No records found...", 'yellow')
 
     for password in passwords:
-        modified_at = password.modified_at.strftime('%B %d, %Y')
-        print(line)
-        print(f"{colored('Application Name', 'yellow')}: {password.application}")
-        print(f"{colored('Login Credentials', 'yellow')}: {password.login}")
-        print(f"{colored('Password', 'yellow')}: {password.password}")
-        print(f"{colored('Notes', 'yellow')}: {password.notes}")
-        print(f"{colored('Last Modified', 'yellow')}: {modified_at}")
-
-        print("\n")
-        print("* Current password copied to clipboard")
-        pyperclip.copy(password.password)
-        print("\n")
-
-        print(f"{colored('n', 'magenta')}) for next password")
-        print(f"{colored('q', 'magenta')}) return to main menu")
-
+        show_password(password)
         next_action = input(f"{colored('Action', 'cyan')}: [Nq] ").lower().strip()
         if next_action == 'q':
             break
 
 def search_passwords():
-    """Search all passwords by application name"""
+    """Search passwords by name"""
     print(line)
     query = input(f"{colored('Search', 'cyan')}: ").lower().strip()
     view_passwords(query)

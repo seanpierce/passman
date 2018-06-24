@@ -39,10 +39,10 @@ Additionally, you can alias 'passman' to the execute the entire command.
 # note that the python versions in this example might not be the version you're using, adjust accordingly
 # the following works for most MacOS users:
 $ PATH_TO_PASSMAN = "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/passman/"
-$ echo "alias passman='python3 $PATH_TO_PYTHON'" > ~/.bashrc
+$ echo "alias passman='python3 $PATH_TO_PASSMAN'" > ~/.bashrc
 # the following works for most Windows 10 users:
 $ PATH_TO_PASSMAN = "/c/Program Files (x86)/Python36-32/Lib/site-packages/passman/"
-$ echo "alias passman='python3 $PATH_TO_PYTHON'" > /.bashrc
+$ echo "alias passman='python3 $PATH_TO_PASSMAN'" > /.bashrc
 ```
 
 \* This package was uploaded using <a href="https://anweshadas.in/how-to-upload-a-package-in-pypi-using-twine/">twine</a>:

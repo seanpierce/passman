@@ -22,13 +22,25 @@ def check_users():
     if not users.exists():
         create_user()
 
+def print_errors(errors):
+    if len(errors) > 0:
+        cprint("** Error - entry cannot be saved", 'red')
+        for error in errors:
+            cprint(f"** {error}", 'red')
+        print(line)
+        return True
+    else:
+        return False
+
+def title(title):
+    cprint(title, "magenta", attrs=['bold'])
 
 def create_user():
     """Create a new user"""
-    cprint('Create a new user', 'magenta', attrs=['bold'])
     new_user = False
     while new_user == False:
         print(line)
+        title("Create user")
         username = input(f"Enter a {colored('username', 'cyan')}: ")
         password = input(f"Enter a {colored('password', 'cyan')}: ")
         confirmation = input(f"Confirm {colored('password', 'cyan')}: ")
@@ -65,11 +77,14 @@ def login():
     global current_user
     if not current_user:
         login = False
+        login_menu()
     else:
         login = True
 
     while login == False:
         print(line)
+
+        title("Log in")
         entered_username = input("Please enter your user name: ")
         entered_password = input("Please enter your master password: ")
 
@@ -88,15 +103,25 @@ def login():
             print("Password not valid for user '{}'".format(entered_username))
             continue
 
-def print_errors(errors):
-    if len(errors) > 0:
-        cprint("** Error - entry cannot be saved", 'red')
-        for error in errors:
-            cprint(f"** {error}", 'red')
-        print(line)
-        return True
-    else:
-        return False
+def login_menu():
+    cprint(logo, 'green')
+
+    print(line)
+
+    print(colored('l', 'magenta') + ") " + 'Log in with an existing user')
+    print(colored('c', 'magenta') + ") " + 'Create a new user')
+
+    action = input(colored('Action', 'cyan') + '[Lc]: ').lower().strip()
+
+    if action == 'c':
+        create_user()
+
+def logout():
+    """Logout"""
+    global current_user
+    current_user = None
+    cprint("User logged out", "green")
+    login()
 
 def menu_loop():
     """Show the menu"""
@@ -104,9 +129,12 @@ def menu_loop():
 
     while choice != 'q':
         print(line)
-        print("Enter" + colored(" 'q' ", 'yellow') + "to quit.")
+
+        title("Main menu")
         for key, value in menu.items():
             print(colored(key, 'magenta') + ") " + value.__doc__)
+
+        print(colored('q', 'yellow') + ") " + "Quit passman")
 
         choice = input(colored('Action', 'cyan') + ': ').lower().strip()
 
@@ -195,5 +223,5 @@ menu = OrderedDict([
     ('a', add_password),
     ('v', view_passwords),
     ('s', search_passwords),
-    ('c', create_user)
+    ('l', logout)
 ])

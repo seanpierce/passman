@@ -21,7 +21,7 @@ $ # via pip
 $ pip3 install passwordmanager
 $ # via source
 $ git clone https://github.com/seanpierce/passman
-$ # path/to/python path/to/passman
+$ # path/to/your/python path/to/passman
 $ python3 passman
 ```
 
@@ -40,11 +40,11 @@ Additionally, you can alias 'passman' to the execute the entire command.
 
 # the following works for most MacOS users:
 $ PATH_TO_PASSMAN = "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/passman/"
-$ echo "alias passman='python3 $PATH_TO_PASSMAN'" > ~/.bashrc
+$ echo "alias passman='python $PATH_TO_PASSMAN'" > ~/.bashrc
 
 # the following works for most Windows 10 users:
 $ PATH_TO_PASSMAN = "/c/Program Files (x86)/Python36-32/Lib/site-packages/passman/"
-$ echo "alias passman='python3 $PATH_TO_PASSMAN'" > /.bashrc
+$ echo "alias passman='python $PATH_TO_PASSMAN'" > /c/users/[username].bashrc
 ```
 
 \* This package was uploaded using <a href="https://anweshadas.in/how-to-upload-a-package-in-pypi-using-twine/">twine</a>:

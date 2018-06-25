@@ -201,6 +201,13 @@ def delete_password(password):
         password.delete_instance()
         cprint("Password successfully deleted!", "green")
 
+def update_password(password):
+    """Update a password"""
+    print(colored('a', 'magenta') + ") " + f"update application: {password.application}")
+    print(colored('l', 'magenta') + ") " + f"update login name: {password.login}")
+    print(colored('p', 'magenta') + ") " + f"update password: {password.password}")
+    print(colored('n', 'magenta') + ") " + f"update notes: {password.notes}")
+
 menu = OrderedDict([
     ('a', add_password),
     ('v', view_passwords),

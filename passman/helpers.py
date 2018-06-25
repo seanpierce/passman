@@ -13,6 +13,9 @@ logo = """\
 
 line = "\n" + ('=' * 25) + "\n"
 
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 def print_errors(errors):
     if len(errors) > 0:
         cprint("** Error - entry cannot be saved", 'red')
@@ -48,6 +51,3 @@ def show_password(password):
 {colored('d', 'magenta')}) delete password
 {colored('q', 'yellow')}) return to main menu
     """)
-
-def clear():
-    os.system('cls' if os.name == 'nt' else 'clear')

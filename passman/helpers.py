@@ -1,3 +1,5 @@
+import os
+
 from colorama import init
 from termcolor import colored, cprint
 import pyperclip
@@ -29,16 +31,23 @@ def show_password(password):
 
     print(line)
 
-    print(f"{colored('Application Name', 'yellow')}: {password.application}")
-    print(f"{colored('Login Credentials', 'yellow')}: {password.login}")
-    print(f"{colored('Password', 'yellow')}: {password.password}")
-    print(f"{colored('Notes', 'yellow')}: {password.notes}")
-    print(f"{colored('Last Modified', 'yellow')}: {modified_at}")
+    print(f"""\
+{colored('Application Name', 'yellow')}: {password.application}
+{colored('Login Credentials', 'yellow')}: {password.login}
+{colored('Password', 'yellow')}: {password.password}
+{colored('Notes', 'yellow')}: {password.notes}
+{colored('Last Modified', 'yellow')}: {modified_at}
+{colored('* Current password copied to clipboard', 'green')}
+    """)
 
-    print("\n")
-    print("* Current password copied to clipboard")
     pyperclip.copy(password.password)
-    print("\n")
 
-    print(f"{colored('n', 'magenta')}) for next password")
-    print(f"{colored('q', 'magenta')}) return to main menu")
+    print(f"""\
+{colored('n', 'magenta')}) next password
+{colored('u', 'magenta')}) update password
+{colored('d', 'magenta')}) delete password
+{colored('q', 'yellow')}) return to main menu
+    """)
+
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')

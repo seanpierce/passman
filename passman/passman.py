@@ -25,6 +25,7 @@ def create_user():
     """Create a new user"""
     new_user = False
     while new_user == False:
+        clear()
         print(line)
         title("Create user")
         username = input(f"Enter a {colored('username', 'cyan')}: ")
@@ -67,6 +68,7 @@ def login():
         login = True
 
     while login == False:
+        clear()
         print(line)
 
         title("Log in")
@@ -89,6 +91,7 @@ def login():
             continue
 
 def login_menu():
+    clear()
     cprint(logo, 'green')
 
     print(line)
@@ -113,6 +116,7 @@ def menu_loop():
     choice = None
 
     while choice != 'q':
+        clear()
         print(line)
 
         title("Main menu")
@@ -121,13 +125,14 @@ def menu_loop():
 
         print(colored('q', 'yellow') + ") " + "Quit passman")
 
-        choice = input(colored('Action', 'cyan') + ': ').lower().strip()
+        choice = input(colored('Action:', 'cyan') + ' ').lower().strip()
 
         if choice in menu:
             menu[choice]()
 
 def add_password():
     """Add a password"""
+    clear()
     print(line)
 
     application = input(f"Enter the {colored('application name', 'magenta')}: ")
@@ -161,6 +166,7 @@ def add_password():
                 notes = notes
             )
             cprint("Password saved successfully!", 'green')
+            input("(press any key to continue)")
 
 def view_passwords(search_query = None):
     """View all passwords"""
@@ -170,14 +176,18 @@ def view_passwords(search_query = None):
     if search_query:
         passwords = passwords.where(Password.application.contains(search_query))
 
+    clear()
+
     if not passwords:
         cprint("No records found...", 'yellow')
 
     for password in passwords:
         show_password(password)
-        next_action = input(f"{colored('Action', 'cyan')}: [Nq] ").lower().strip()
+        next_action = input(f"{colored('Action:', 'cyan')} [Nq] ").lower().strip()
         if next_action == 'q':
             break
+        elif next_action == 'd':
+            delete_password(password)
 
 def search_passwords():
     """Search passwords by name"""
@@ -185,9 +195,11 @@ def search_passwords():
     query = input(f"{colored('Search', 'cyan')}: ").lower().strip()
     view_passwords(query)
 
-
 def delete_password(password):
     """Delete a password"""
+    if input("Are you sure? [yN] ").lower().strip() == 'y':
+        password.delete_instance()
+        cprint("Password successfully deleted!", "green")
 
 menu = OrderedDict([
     ('a', add_password),

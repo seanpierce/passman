@@ -183,9 +183,11 @@ def view_passwords(search_query = None):
 
     for password in passwords:
         show_password(password)
-        next_action = input(f"{colored('Action:', 'cyan')} [Nq] ").lower().strip()
+        next_action = input(f"{colored('Action:', 'cyan')} [N] ").lower().strip()
         if next_action == 'q':
             break
+        elif next_action == 'u':
+            update_password(password)
         elif next_action == 'd':
             delete_password(password)
 
@@ -203,10 +205,37 @@ def delete_password(password):
 
 def update_password(password):
     """Update a password"""
-    print(colored('a', 'magenta') + ") " + f"update application: {password.application}")
-    print(colored('l', 'magenta') + ") " + f"update login name: {password.login}")
-    print(colored('p', 'magenta') + ") " + f"update password: {password.password}")
-    print(colored('n', 'magenta') + ") " + f"update notes: {password.notes}")
+    clear()
+
+    editing = True
+    while editing == True:
+        print(line)
+        title("Update password")
+
+        print(colored('a', 'magenta') + ") " + f"update application name: {password.application}")
+        print(colored('l', 'magenta') + ") " + f"update login name: {password.login}")
+        print(colored('p', 'magenta') + ") " + f"update password: {password.password}")
+        print(colored('n', 'magenta') + ") " + f"update notes: {password.notes}")
+        print(colored('q', 'yellow') + ") " + f"Done editing")
+
+        next_action = input(f"{colored('Action:', 'cyan')} [Nq] ").lower().strip()
+
+        if next_action == 'q':
+            editing = False
+        elif next_action == 'a':
+            update_prop(password, "application")
+        elif next_action == 'l':
+            update_prop(password, "login")
+        elif next_action == 'p':
+            update_prop(password, "password")
+        elif next_action == 'n':
+            update_prop(password, "notes")
+
+def update_prop(password, prop):
+    new_prop = input(f"New {prop}: ")
+    password[prop] = new_prop
+    password.save()
+    cprint(f"{prop} successfully updated!")
 
 menu = OrderedDict([
     ('a', add_password),

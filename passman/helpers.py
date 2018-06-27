@@ -11,14 +11,14 @@ logo = """\
 |__|  |__|__|_____|_____|_|_|_|__|__|_|___|
 """
 
-line = "\n" + ('=' * 25) + "\n"
+line = "\n" + ('=' * 30) + "\n"
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def print_errors(errors):
     if len(errors) > 0:
-        cprint("** Error - entry cannot be saved", 'red')
+        cprint("** Error:", 'red')
         for error in errors:
             cprint(f"** {error}", 'red')
         print(line)
@@ -27,7 +27,7 @@ def print_errors(errors):
         return False
 
 def title(title):
-    cprint(title, "magenta", attrs=['bold'])
+    cprint(title, "magenta", attrs = ['bold'])
 
 def show_password(password):
     modified_at = password.modified_at.strftime('%B %d, %Y')

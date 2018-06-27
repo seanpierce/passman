@@ -232,10 +232,19 @@ def update_password(password):
             update_prop(password, "notes")
 
 def update_prop(password, prop):
-    new_prop = input(f"New {prop}: ")
-    password[prop] = new_prop
+    new_prop = input(f"New \"{prop}\": ")
+
+    if prop == 'application':
+        password.application = new_prop
+    elif prop == 'login':
+        password.login = new_prop
+    elif prop == 'password':
+        password.password = new_prop
+    elif prop == 'notes':
+        password.notes = new_prop
+
     password.save()
-    cprint(f"{prop} successfully updated!")
+    cprint(f"{prop} successfully updated!", "green")
 
 menu = OrderedDict([
     ('a', add_password),

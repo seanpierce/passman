@@ -15,7 +15,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name = 'passwordmanager',
-    version = '1.3.0',
+    version = '2.0.9',
     packages = ['passman',],
     install_requires = requirements,
     license = 'Creative Commons Attribution-Noncommercial-Share Alike license',
@@ -25,7 +25,7 @@ setup(
     author = 'Sean Pierce Sumler',
     entry_points = {
         'console_scripts': [
-            'passman = __main__'
+            'passman = passman.__main__:main'
         ]
     },
     classifiers = [

@@ -56,7 +56,6 @@ $ twine upload dist/*
 
 **TODO:**
 * Separate main menu functions into own module
-* Update/delete passwords from database
 
 **Author:**  
 Sean Pierce Sumler

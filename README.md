@@ -33,7 +33,7 @@ $ echo "alias pip=pip3" > ~/.bashrc
 $ # for zshell users, replace ~/.bachrc with ~/.zshrc
 ```
 
-Currently, there is an outstanding <a href="https://github.com/seanpierce/passman/issues/4">issue</a> to allow automatic global aliasing of the passman command on installation. For now, you can manually alias 'passman' to the execute the entire command.
+Currently, there is an outstanding <a href="https://github.com/seanpierce/passman/issues/4">issue</a> to allow automatic global aliasing of the passman command on installation. For now, you can manually alias 'passman'.
 
 ```shell
 # note that the python versions in this example might not be the version you're using, adjust to your current version accordingly

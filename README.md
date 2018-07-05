@@ -33,7 +33,7 @@ $ echo "alias pip=pip3" > ~/.bashrc
 $ # for zshell users, replace ~/.bachrc with ~/.zshrc
 ```
 
-Additionally, you can alias 'passman' to the execute the entire command.
+Currently, there is an outstanding <a href="https://github.com/seanpierce/passman/issues/4">issue</a> to allow automatic global aliasing of the passman command on installation. For now, you can manually alias 'passman' to the execute the entire command.
 
 ```shell
 # note that the python versions in this example might not be the version you're using, adjust to your current version accordingly
@@ -55,6 +55,7 @@ $ twine upload dist/*
 
 
 **TODO:**
+* Update "entry_points" prop in setup.py to allow for global usage with single 'passman' commad
 * Separate main menu functions into own module
 
 **Author:**  

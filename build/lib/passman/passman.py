@@ -134,7 +134,6 @@ def create_user():
             continue
 
         hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-
         global current_user
         current_user = User.create(
             username = username,

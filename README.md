@@ -1,5 +1,5 @@
 # PassMan
-<img src="assets/Release-1.3.0-blue.svg">
+<img src="assets/pill-2.0.0.svg">
 
 PassMan is a super simple, Python-based **pass**word **man**agement console application. Data is managed using Peewee ORM and stored in a Sqlite3 database.
 
@@ -10,19 +10,16 @@ PassMan is a super simple, Python-based **pass**word **man**agement console appl
   * Check version using `$ python --version`
   * <a href="https://www.python.org/downloads/release/python-365/">Installing or upgrading to Python3</a>
 * <a href="http://docs.peewee-orm.com/en/latest/">PeeWee</a>
+* <a href="https://www.sqlite.org/index.html">SQLite3</a>
 * <a href="https://pypi.org/project/bcrypt/">Bcrypt</a>
-* <a href="https://pypi.org/project/colorama/">Colorama</a>
-* <a href="https://pypi.org/project/termcolor/">Termcolor</a>
+* <a href="https://pypi.org/project/colorama/">Colorama</a> and <a href="https://pypi.org/project/termcolor/">Termcolor</a>
 * <a href="https://pypi.org/project/pyperclip/">Pyperclip</a>
 
 ### Installation and Usage
 ```shell
 $ # via pip
 $ pip3 install passwordmanager
-$ # via source
-$ git clone https://github.com/seanpierce/passman
-$ # path/to/your/python path/to/passman
-$ python3 passman
+$ passman
 ```
 
 ### Notes:

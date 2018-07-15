@@ -26,6 +26,6 @@ $ passman
 Sean Pierce Sumler
 
 **License:**  
-MIT, use at your own risk
+<a href="LICENSE">MIT</a>, use at your own risk
 
 For questions and comments please <a href="https://github.com/seanpierce/passman/issues/new">raise an issue</a>. <a href="https://github.com/seanpierce/passman/compare">Pull requests</a> always welcome, too. Thanks!

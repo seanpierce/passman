@@ -1,47 +1,27 @@
-from distutils.core import setup
+import setuptools
 
-import os
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
-requirements = [
-    'peewee',
-    'bcrypt',
-    'termcolor',
-    'colorama',
-    'pyperclip'
-]
-
-# allow setup.py to be run from any path
-os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
-
-setup(
-    name = 'passwordmanager',
-    version = '2.0.9',
-    packages = ['passman',],
-    install_requires = requirements,
-    license = 'Creative Commons Attribution-Noncommercial-Share Alike license',
+setuptools.setup(
+    name = 'mypassman',
+    version = '0.0.4',
+    author = "Sean Pierce",
+    author_email = "sumler.sean@gmail.com",
     description = 'A super simple password management app',
-    long_description = open('readme.txt').read(),
-    url = 'https://github.com/seanpierce/passman',
-    author = 'Sean Pierce Sumler',
+    long_description = long_description,
+    long_description_content_type = "text/markdown",
+    url = "https://github.com/seanpierce/passman",
+    packages = setuptools.find_packages(),
+    classifiers=(
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Topic :: Utilities"
+    ),
     entry_points = {
         'console_scripts': [
-            'passman = passman.__main__:main'
+            'passman = passman.passman:main'
         ]
     },
-    classifiers = [
-        'Environment :: Console',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',P
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-        'Topic :: Documentation',
-        'Topic :: Utilities'
-    ],
 )

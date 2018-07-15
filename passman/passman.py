@@ -1,13 +1,96 @@
 #!/usr/bin/env python3
-# don't forget : chmod +x passman.py
 
+import os
+import sys
+import datetime
 import bcrypt
-from models import *
-from helpers import *
+import pyperclip
 from colorama import init
 from termcolor import colored, cprint
+from collections import OrderedDict
+from colorama import init
+from termcolor import colored, cprint
+from peewee import *
 
 init()
+
+# ====================================================
+# Models
+# ====================================================
+
+db = SqliteDatabase('passman.db')
+
+class BaseModel(Model):
+    class Meta:
+        database = db
+
+class User(BaseModel):
+    username = CharField(max_length = 125, unique = True)
+    password_hash = CharField(max_length = 255)
+
+class Password(BaseModel):
+    user = ForeignKeyField(User, backref='passwords')
+    application = CharField(max_length = 255)
+    login = CharField(max_length = 255)
+    password = CharField(max_length = 255)
+    notes = TextField(null = False)
+    modified_at = DateTimeField(default = datetime.datetime.now)
+
+# ====================================================
+# Helpers
+# ====================================================
+
+logo = """\
+ _____ _____ _____ _____ _____ _____ _____
+|  _  |  _  |   __|   __|     |  _  |   | |
+|   __|     |__   |__   | | | |     | | | |
+|__|  |__|__|_____|_____|_|_|_|__|__|_|___|
+"""
+
+line = "\n" + ('=' * 30) + "\n"
+
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def print_errors(errors):
+    if len(errors) > 0:
+        cprint("** Error:", 'red')
+        for error in errors:
+            cprint(f"** {error}", 'red')
+        print(line)
+        return True
+    else:
+        return False
+
+def title(title):
+    cprint(title, "magenta", attrs = ['bold'])
+
+def show_password(password):
+    modified_at = password.modified_at.strftime('%B %d, %Y')
+
+    print(line)
+
+    print(f"""\
+{colored('Application Name', 'yellow')}: {password.application}
+{colored('Login Credentials', 'yellow')}: {password.login}
+{colored('Password', 'yellow')}: {password.password}
+{colored('Notes', 'yellow')}: {password.notes}
+{colored('Last Modified', 'yellow')}: {modified_at}
+{colored('* Current password copied to clipboard', 'green')}
+    """)
+
+    pyperclip.copy(password.password)
+
+    print(f"""\
+{colored('n', 'magenta')}) next password
+{colored('u', 'magenta')}) update password
+{colored('d', 'magenta')}) delete password
+{colored('q', 'yellow')}) return to main menu
+    """)
+
+# ====================================================
+# Main functionality
+# ====================================================
 
 current_user = None
 
@@ -51,6 +134,7 @@ def create_user():
             continue
 
         hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
         global current_user
         current_user = User.create(
             username = username,
@@ -252,3 +336,15 @@ menu = OrderedDict([
     ('s', search_passwords),
     ('l', logout)
 ])
+
+def main():
+    initialize()
+    check_users()
+    login()
+    menu_loop()
+
+if __name__ == '__main__':
+    try:
+        sys.exit(main())
+    except Exception as e:
+        print(e)

@@ -4,4 +4,6 @@
 /passman/__pycache__/
 /.vscode/
 /dist/
+/mypassman.egg-info/
+/build/
 /MANIFEST

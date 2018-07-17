@@ -16,6 +16,7 @@ PassMan is a super simple, Python-based **pass**word **man**agement console appl
 * <a href="https://pypi.org/project/pyperclip/">Pyperclip</a>
 
 ### Installation and Usage
+\*Dependent packages will be downloaded as part of the installation process
 ```shell
 $ # via pip
 $ pip3 install mypassman

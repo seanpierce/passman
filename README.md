@@ -1,4 +1,7 @@
 # PassMan
+
+## This is a personal project, please don't use this IRL
+
 <img src="assets/pill-2.0.0.svg">
 
 PassMan is a super simple, Python-based **pass**word **man**agement console application. Data is managed using Peewee ORM and stored in a Sqlite3 database.
